@@ -1,0 +1,80 @@
+package com.miniproject.miniproject.Service;
+
+import java.util.List;
+
+import com.miniproject.miniproject.DTO.UserLoginRequest;
+import com.miniproject.miniproject.DTO.UserRegisterRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.miniproject.miniproject.Model.User;
+import com.miniproject.miniproject.Repository.UserRepository;
+
+@Service
+public class UserServiceImpl implements UserService {
+
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public User getUserById(int id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public User addUser(User user) {
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User updateUser(int id, User user) {
+        if (userRepository.existsById(id)) {
+            user.setId(id);
+            return userRepository.save(user);
+        }
+        return null;
+    }
+
+    @Override
+    public void deleteUser(int id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public List<User> searchUsers(String keyword) {
+        // Implement search logic here if needed
+        return null; // Placeholder for search implementation
+    }
+
+    @Override
+    public User register(UserRegisterRequest request) {
+        User u = new User();
+        u.setUsername(request.getUsername());
+        u.setPassword(request.getPassword());
+        u.setFullName(request.getFullName());
+        u.setEmail(request.getEmail());
+        u.setPhoneNumber(request.getPhoneNumber());
+        return userRepository.save(u);
+    }
+
+    @Override
+    public User login(UserLoginRequest request) {
+        User u = userRepository.findByUsername(request.getUserName());
+        if (u == null) {
+            throw new RuntimeException("User not found");
+        }
+        if (!passwordEncoder.matches(request.getPassword(), u.getPassword())) {
+            throw new RuntimeException("Invalid Password");
+        }
+        return u;
+    }
+
+}
