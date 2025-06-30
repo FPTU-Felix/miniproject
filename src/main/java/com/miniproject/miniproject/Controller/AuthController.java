@@ -1,6 +1,6 @@
 package com.miniproject.miniproject.Controller;
 
-import com.miniproject.miniproject.DTO.UserLoginRequest;
+import com.miniproject.miniproject.DTO.Request.UserLoginRequest;
 import com.miniproject.miniproject.Model.User;
 import com.miniproject.miniproject.Repository.UserRepository;
 import com.miniproject.miniproject.Service.Email.EmailService;
@@ -8,11 +8,10 @@ import com.miniproject.miniproject.Service.OTP.OtpService;
 import com.miniproject.miniproject.Service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/library/auth")
@@ -26,8 +25,12 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody @Valid UserLoginRequest request){
-        User u = userService.login(request);
-        return ResponseEntity.ok(u);
+        try {
+            User u = userService.login(request);
+            return ResponseEntity.ok(u);
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+        }
     }
     @PostMapping("/send-otp")
     public ResponseEntity<String> sendOtp(@RequestParam String email){

@@ -1,4 +1,4 @@
-package com.miniproject.miniproject.DTO;
+package com.miniproject.miniproject.DTO.Response;
 
 import lombok.Data;
 

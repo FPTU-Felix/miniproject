@@ -1,4 +1,4 @@
-package com.miniproject.miniproject.DTO;
+package com.miniproject.miniproject.DTO.Request;
 
 import lombok.Getter;
 import lombok.Setter;

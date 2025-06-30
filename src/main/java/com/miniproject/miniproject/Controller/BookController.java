@@ -2,19 +2,17 @@ package com.miniproject.miniproject.Controller;
 
 import java.util.List;
 
-import com.miniproject.miniproject.DTO.BookFilterRequest;
-import com.miniproject.miniproject.DTO.BookRequest;
-import com.miniproject.miniproject.DTO.BookResponse;
+import com.miniproject.miniproject.DTO.Request.BookFilterRequest;
+import com.miniproject.miniproject.DTO.Request.BookRequest;
+import com.miniproject.miniproject.DTO.Response.BookResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.miniproject.miniproject.Model.Book;
 import com.miniproject.miniproject.Service.BookService;
 
 @RestController

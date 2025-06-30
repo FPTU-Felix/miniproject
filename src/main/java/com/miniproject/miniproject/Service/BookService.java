@@ -2,9 +2,8 @@ package com.miniproject.miniproject.Service;
 
 import java.util.List;
 
-import com.miniproject.miniproject.DTO.BookRequest;
-import com.miniproject.miniproject.DTO.BookResponse;
-import com.miniproject.miniproject.Model.Book;
+import com.miniproject.miniproject.DTO.Request.BookRequest;
+import com.miniproject.miniproject.DTO.Response.BookResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

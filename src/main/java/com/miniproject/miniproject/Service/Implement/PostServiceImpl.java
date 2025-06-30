@@ -1,9 +1,10 @@
-package com.miniproject.miniproject.Service;
+package com.miniproject.miniproject.Service.Implement;
 
-import com.miniproject.miniproject.DTO.PostRequest;
-import com.miniproject.miniproject.DTO.PostResponse;
+import com.miniproject.miniproject.DTO.Request.PostRequest;
+import com.miniproject.miniproject.DTO.Response.PostResponse;
 import com.miniproject.miniproject.Model.Post;
 import com.miniproject.miniproject.Repository.PostRepository;
+import com.miniproject.miniproject.Service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

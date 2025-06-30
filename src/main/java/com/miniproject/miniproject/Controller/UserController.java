@@ -2,7 +2,7 @@ package com.miniproject.miniproject.Controller;
 
 import java.util.List;
 
-import com.miniproject.miniproject.DTO.UserRegisterRequest;
+import com.miniproject.miniproject.DTO.Request.UserRegisterRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

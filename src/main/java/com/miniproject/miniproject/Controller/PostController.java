@@ -1,6 +1,6 @@
 package com.miniproject.miniproject.Controller;
 
-import com.miniproject.miniproject.DTO.PostResponse;
+import com.miniproject.miniproject.DTO.Response.PostResponse;
 import com.miniproject.miniproject.Service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

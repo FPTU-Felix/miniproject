@@ -2,8 +2,8 @@ package com.miniproject.miniproject.Service;
 
 import java.util.List;
 
-import com.miniproject.miniproject.DTO.UserLoginRequest;
-import com.miniproject.miniproject.DTO.UserRegisterRequest;
+import com.miniproject.miniproject.DTO.Request.UserLoginRequest;
+import com.miniproject.miniproject.DTO.Request.UserRegisterRequest;
 import com.miniproject.miniproject.Model.User;
 
 public interface UserService {
@@ -23,4 +23,6 @@ public interface UserService {
     User login(UserLoginRequest request);
 
     List<User> searchUsers(String keyword);
+
+    User findByUsername(String username);
 }

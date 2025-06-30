@@ -1,4 +1,4 @@
-package com.miniproject.miniproject.DTO;
+package com.miniproject.miniproject.DTO.Request;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;

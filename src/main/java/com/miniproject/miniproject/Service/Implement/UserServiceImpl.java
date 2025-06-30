@@ -1,10 +1,12 @@
-package com.miniproject.miniproject.Service;
+package com.miniproject.miniproject.Service.Implement;
 
 import java.util.List;
 
-import com.miniproject.miniproject.DTO.UserLoginRequest;
-import com.miniproject.miniproject.DTO.UserRegisterRequest;
+import com.miniproject.miniproject.DTO.Request.UserLoginRequest;
+import com.miniproject.miniproject.DTO.Request.UserRegisterRequest;
+import com.miniproject.miniproject.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -58,7 +60,7 @@ public class UserServiceImpl implements UserService {
     public User register(UserRegisterRequest request) {
         User u = new User();
         u.setUsername(request.getUsername());
-        u.setPassword(request.getPassword());
+        u.setPassword(passwordEncoder.encode(request.getPassword()));
         u.setFullName(request.getFullName());
         u.setEmail(request.getEmail());
         u.setPhoneNumber(request.getPhoneNumber());
@@ -67,7 +69,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User login(UserLoginRequest request) {
-        User u = userRepository.findByUsername(request.getUserName());
+        User u = userRepository.findByUsername(request.getUsername());
         if (u == null) {
             throw new RuntimeException("User not found");
         }
@@ -76,5 +78,12 @@ public class UserServiceImpl implements UserService {
         }
         return u;
     }
-
+    @Override
+    public User findByUsername(String username){
+        User u = userRepository.findByUsername(username);
+        if(u==null){
+            return null;
+        }
+        return u;
+    }
 }
