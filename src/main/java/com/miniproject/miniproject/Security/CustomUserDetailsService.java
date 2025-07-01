@@ -20,6 +20,9 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
+        System.out.println("=== loadUserByUsername ===");
+        System.out.println("Username: " + user.getUsername());
+        System.out.println("Encoded password: " + user.getPassword());
         return new CustomerUserDetails(user);
     }
 }

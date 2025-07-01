@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.miniproject.miniproject.DTO.Request.UserLoginRequest;
 import com.miniproject.miniproject.DTO.Request.UserRegisterRequest;
+import com.miniproject.miniproject.Model.Role;
+import com.miniproject.miniproject.Repository.RoleRepository;
 import com.miniproject.miniproject.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,6 +22,8 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
     public List<User> getAllUsers() {
@@ -64,6 +68,12 @@ public class UserServiceImpl implements UserService {
         u.setFullName(request.getFullName());
         u.setEmail(request.getEmail());
         u.setPhoneNumber(request.getPhoneNumber());
+
+        Role defaultRole = roleRepository.findByName("USER");
+        if (defaultRole==null){
+            throw new RuntimeException("Default role not found");
+        }
+        u.setRoles(List.of(defaultRole));
         return userRepository.save(u);
     }
 
