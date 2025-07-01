@@ -31,7 +31,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())//tắt CSRF vì dùng REST API
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/api/v1/library/auth/**"//Cho phép login, register
+                                "/api/v1/library/auth/**",
+                                "/api/v1/library/book/**"//Cho phép login, register
                                 //                                "/swagger-ui/**", //Nếu có swagger
                                 //                                "/v3/api-docs/**"
                         ).permitAll()
