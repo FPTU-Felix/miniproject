@@ -56,12 +56,6 @@ public class AuthController {
         return ResponseEntity.ok("OTP send to Email");
     }
 
-    @PostMapping("/verify-otp")
-    public ResponseEntity<String> verifyOtp(@RequestParam String email, @RequestParam String otp) {
-        boolean valid = otpService.validateOtp(email, otp);
-        if (!valid) return ResponseEntity.badRequest().body("Invalid or experied OTP");
-        return ResponseEntity.ok("OTP verifired!");
-    }
 
     @PostMapping("reset-password")
     public ResponseEntity<String> resetPassword(@RequestParam String email, @RequestParam String otp, @RequestParam String newPassword) {

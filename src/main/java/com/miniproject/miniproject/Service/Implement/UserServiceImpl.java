@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
         u.setEmail(request.getEmail());
         u.setPhoneNumber(request.getPhoneNumber());
 
-        Role defaultRole = roleRepository.findByName("USER");
+        Role defaultRole = roleRepository.findByName("ROLE_USER");
         if (defaultRole==null){
             throw new RuntimeException("Default role not found");
         }

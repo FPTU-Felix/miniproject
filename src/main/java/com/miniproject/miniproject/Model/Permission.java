@@ -22,6 +22,8 @@ public class Permission {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "permission_id")
     private int id;
+    @Column(name = "code")
+    private String code;
     @Column(name = "name")
     private String name;
     @Column(name = "description")
@@ -33,8 +35,9 @@ public class Permission {
     public Permission() {
     }
 
-    public Permission(int id, String name, String description, List<Role> roles) {
+    public Permission(int id, String code, String name, String description, List<Role> roles) {
         this.id = id;
+        this.code = code;
         this.name = name;
         this.description = description;
         this.roles = roles;
