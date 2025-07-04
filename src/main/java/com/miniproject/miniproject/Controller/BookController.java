@@ -5,6 +5,7 @@ import java.util.List;
 import com.miniproject.miniproject.DTO.Request.BookFilterRequest;
 import com.miniproject.miniproject.DTO.Request.BookRequest;
 import com.miniproject.miniproject.DTO.Response.BookResponse;
+import com.miniproject.miniproject.DTO.Response.GeneralListResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,7 +24,7 @@ public class BookController {
     private BookService bookService;
 
     @GetMapping
-    public List<BookResponse> getAllBook() {
+    public GeneralListResponse<List<BookResponse>> getAllBook() {
         return bookService.getAllBooks();
     }
 

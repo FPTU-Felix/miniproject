@@ -3,13 +3,14 @@ package com.miniproject.miniproject.Service;
 import java.util.List;
 
 import com.miniproject.miniproject.DTO.Request.BookRequest;
+import com.miniproject.miniproject.DTO.Response.GeneralListResponse;
 import com.miniproject.miniproject.DTO.Response.BookResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface BookService {
 
-    List<BookResponse> getAllBooks();
+    GeneralListResponse<List<BookResponse>> getAllBooks();
 
     BookResponse getBookById(int id);
 

@@ -13,5 +13,5 @@ public class BookResponse {
     private String language;
     private String description;
     private int quantity;
-    private String created_at;//Chi mang thong tin cua BookRes => can qua 1 lop DTO nua mang thong tin trang
+    private String created_at;
 }

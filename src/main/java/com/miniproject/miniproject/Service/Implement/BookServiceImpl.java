@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import com.miniproject.miniproject.DTO.Request.BookRequest;
 import com.miniproject.miniproject.DTO.Response.BookResponse;
+import com.miniproject.miniproject.DTO.Response.GeneralListResponse;
 import com.miniproject.miniproject.Service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,8 +21,11 @@ public class BookServiceImpl implements BookService {
     private BookRepository bookRepository;
 
     @Override
-    public List<BookResponse> getAllBooks() {
-        return bookRepository.findAll().stream().map(this::mapToResponse).collect(Collectors.toList());
+    public GeneralListResponse<List<BookResponse>> getAllBooks() {
+        List <BookResponse> books = bookRepository.findAll().stream()
+            .map(this::mapToResponse)
+            .collect(Collectors.toList());
+        return new GeneralListResponse<>(books, "checking");
     }
 
     @Override
