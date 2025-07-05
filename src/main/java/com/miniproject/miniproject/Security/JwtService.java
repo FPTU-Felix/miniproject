@@ -7,6 +7,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class JwtService {
@@ -16,8 +18,14 @@ public class JwtService {
     private final long expirationMs = 86400000;//miliseconds
 
     public String gennerateToken(UserDetails userDetails){
+        CustomerUserDetails customUser = (CustomerUserDetails) userDetails;
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("username", customUser.getUsername());
+        claims.put("email", customUser.getEmail());
+        claims.put("roles", customUser.getRoleNames());
         return Jwts.builder()
-                .setSubject(userDetails.getUsername())
+                .setClaims(claims)
+                .setSubject(String.valueOf(customUser.getUserId()))//subject la id
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expirationMs))
                 .signWith(SignatureAlgorithm.HS256, secretKey)

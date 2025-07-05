@@ -51,12 +51,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             System.out.println("🔐 Generating token...");
             String jwt = jwtService.gennerateToken(userDetails);
             System.out.println("✅ JWT: " + jwt);
-            return new AuthenticationResponse(jwt,request.getUsername());
+            return new AuthenticationResponse(jwt, request.getUsername());
         } catch (Exception e) {
             System.out.println("❌ Token generation failed:");
             e.printStackTrace();
             throw new RuntimeException("Token generation failed: " + e.getMessage());
         }
     }
-
 }

@@ -72,4 +72,18 @@ public class CustomerUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public int getUserId() {
+        return user.getId(); //Dung UUID de chuyen thanh String phuc tap
+    }
+    public Set<String> getRoleNames() {
+        Set<String> roles = new HashSet<>();
+        for (Role role : user.getRoles()) {
+            roles.add(role.getName());
+        }
+        return roles;
+    }
+    public String getEmail(){
+        return user.getEmail();
+    }
 }
