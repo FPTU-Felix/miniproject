@@ -4,11 +4,12 @@ import java.util.List;
 
 import com.miniproject.miniproject.DTO.Request.UserLoginRequest;
 import com.miniproject.miniproject.DTO.Request.UserRegisterRequest;
+import com.miniproject.miniproject.DTO.Response.ApiResponse;
 import com.miniproject.miniproject.Model.User;
 
 public interface UserService {
 
-    List<User> getAllUsers();
+    ApiResponse<List<User>> getAllUsers();
 
     User getUserById(int id);
 

@@ -3,6 +3,7 @@ package com.miniproject.miniproject.Controller;
 import java.util.List;
 
 import com.miniproject.miniproject.DTO.Request.UserRegisterRequest;
+import com.miniproject.miniproject.DTO.Response.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public List<User> getAllUsers() {
+    public ApiResponse<List<User>> getAllUsers() {
         return userService.getAllUsers();
     }
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.miniproject.miniproject.DTO.Request.UserLoginRequest;
 import com.miniproject.miniproject.DTO.Request.UserRegisterRequest;
+import com.miniproject.miniproject.DTO.Response.ApiResponse;
 import com.miniproject.miniproject.Model.Role;
 import com.miniproject.miniproject.Repository.RoleRepository;
 import com.miniproject.miniproject.Service.UserService;
@@ -26,8 +27,8 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public ApiResponse<List<User>> getAllUsers() {
+        return new ApiResponse<>("Sucess", userRepository.findAll(), null);
     }
 
     @Override
@@ -69,14 +70,14 @@ public class UserServiceImpl implements UserService {
         u.setEmail(request.getEmail());
 
         Role defaultRole = roleRepository.findByName("USER");
-        if (defaultRole==null){
+        if (defaultRole == null) {
             throw new RuntimeException("Default role not found");
         }
         u.setRoles(List.of(defaultRole));
         return userRepository.save(u);
     }
 
-//    @Override
+    //    @Override
 //    public User login(UserLoginRequest request) {
 //        User u = userRepository.findByUsername(request.getUsername());
 //        if (u == null) {
@@ -88,17 +89,18 @@ public class UserServiceImpl implements UserService {
 //        return u;
 //    }
     @Override
-    public User findByUsername(String username){
+    public User findByUsername(String username) {
         User u = userRepository.findByUsername(username);
-        if(u==null){
+        if (u == null) {
             return null;
         }
         return u;
     }
+
     @Override
-    public User findById(String id){
+    public User findById(String id) {
         User u = userRepository.findById(id);
-        if(u==null){
+        if (u == null) {
             return null;
         }
         return u;
