@@ -20,9 +20,14 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
-        System.out.println("=== loadUserByUsername ===");
-        System.out.println("Username: " + user.getUsername());
-        System.out.println("Encoded password: " + user.getPassword());
+        return new CustomerUserDetails(user);
+    }
+
+    public UserDetails loadUserById(String id) throws UsernameNotFoundException {
+        User user = userService.findByUsername(id);//Dung UserService
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
         return new CustomerUserDetails(user);
     }
 }

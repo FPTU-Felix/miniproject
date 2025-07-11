@@ -7,6 +7,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class JwtService {
@@ -16,14 +19,15 @@ public class JwtService {
     private final long expirationMs = 86400000;//miliseconds
 
     public String gennerateToken(UserDetails userDetails){
+        CustomerUserDetails customUser = (CustomerUserDetails) userDetails;
         return Jwts.builder()
-                .setSubject(userDetails.getUsername())
+                .setSubject(customUser.getUserId())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expirationMs))
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
-    public String extractUsername(String token){
+    public String extractKey(String token){
         return Jwts.parser()
                 .setSigningKey(secretKey)
                 .parseClaimsJws(token)
@@ -31,8 +35,9 @@ public class JwtService {
                 .getSubject();
     }
     public boolean isTokenValid(String token, UserDetails userDetails){
-        String username= extractUsername(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        String id= extractKey(token);
+        CustomerUserDetails customUser = (CustomerUserDetails) userDetails;
+        return (id.equals(customUser.getUserId()) && !isTokenExpired(token));
     }
     public boolean isTokenExpired(String token){
         Date expiration = Jwts.parser()

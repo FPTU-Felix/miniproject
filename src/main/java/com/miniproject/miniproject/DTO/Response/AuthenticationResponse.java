@@ -1,8 +1,11 @@
 package com.miniproject.miniproject.DTO.Response;
 
+import com.miniproject.miniproject.Model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -10,4 +13,8 @@ import lombok.NoArgsConstructor;
 public class AuthenticationResponse {
     private String accessToken;
     private String username;
+    private String fullname;
+    private String email;
+    private String avatar;
+    private List<Role> roles;
 }

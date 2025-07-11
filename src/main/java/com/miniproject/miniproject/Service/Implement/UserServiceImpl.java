@@ -40,14 +40,14 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
-    @Override
-    public User updateUser(int id, User user) {
-        if (userRepository.existsById(id)) {
-            user.setId(id);
-            return userRepository.save(user);
-        }
-        return null;
-    }
+//    @Override
+//    public User updateUser(int id, User user) {
+//        if (userRepository.existsById(id)) {
+//            user.setId(id);
+//            return userRepository.save(user);
+//        }
+//        return null;
+//    }
 
     @Override
     public void deleteUser(int id) {
@@ -67,7 +67,6 @@ public class UserServiceImpl implements UserService {
         u.setPassword(passwordEncoder.encode(request.getPassword()));
         u.setFullName(request.getFullName());
         u.setEmail(request.getEmail());
-        u.setPhoneNumber(request.getPhoneNumber());
 
         Role defaultRole = roleRepository.findByName("USER");
         if (defaultRole==null){
@@ -77,20 +76,28 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(u);
     }
 
+//    @Override
+//    public User login(UserLoginRequest request) {
+//        User u = userRepository.findByUsername(request.getUsername());
+//        if (u == null) {
+//            throw new RuntimeException("User not found");
+//        }
+//        if (!passwordEncoder.matches(request.getPassword(), u.getPassword())) {
+//            throw new RuntimeException("Invalid Password");
+//        }
+//        return u;
+//    }
     @Override
-    public User login(UserLoginRequest request) {
-        User u = userRepository.findByUsername(request.getUsername());
-        if (u == null) {
-            throw new RuntimeException("User not found");
-        }
-        if (!passwordEncoder.matches(request.getPassword(), u.getPassword())) {
-            throw new RuntimeException("Invalid Password");
+    public User findByUsername(String username){
+        User u = userRepository.findByUsername(username);
+        if(u==null){
+            return null;
         }
         return u;
     }
     @Override
-    public User findByUsername(String username){
-        User u = userRepository.findByUsername(username);
+    public User findById(String id){
+        User u = userRepository.findById(id);
         if(u==null){
             return null;
         }

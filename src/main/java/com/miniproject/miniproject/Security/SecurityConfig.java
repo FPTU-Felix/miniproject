@@ -32,9 +32,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/api/v1/library/auth/**",
-                                "/api/v1/library/book/**"//Cho phép login, register
-                                //                                "/swagger-ui/**", //Nếu có swagger
-                                //                                "/v3/api-docs/**"
+                                "/api/v1/library/book/**",//Cho phép login, register
+                                "/swagger-ui/**", //Nếu có swagger
+                                "/v3/api-docs/**"
                         ).permitAll()
                         .anyRequest().authenticated()//Các route còn lại cần JWT
                 )

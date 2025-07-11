@@ -4,15 +4,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.miniproject.miniproject.DTO.Request.BookRequest;
+import com.miniproject.miniproject.DTO.Response.ApiResponse;
 import com.miniproject.miniproject.DTO.Response.BookResponse;
-import com.miniproject.miniproject.DTO.Response.GeneralListResponse;
+import com.miniproject.miniproject.Model.Book;
 import com.miniproject.miniproject.Service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.miniproject.miniproject.Model.Book;
 import com.miniproject.miniproject.Repository.BookRepository;
 
 @Service
@@ -21,17 +20,18 @@ public class BookServiceImpl implements BookService {
     private BookRepository bookRepository;
 
     @Override
-    public GeneralListResponse<List<BookResponse>> getAllBooks() {
-        List <BookResponse> books = bookRepository.findAll().stream()
-            .map(this::mapToResponse)
-            .collect(Collectors.toList());
-        return new GeneralListResponse<>(books, "checking");
+    public ApiResponse<List<BookResponse>> getAllBooks() {
+        List<BookResponse> books = bookRepository.findAll().stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+        return new ApiResponse<>(String.valueOf(HttpStatus.OK), books, null);
     }
 
     @Override
-    public BookResponse getBookById(int id) {
+    public ApiResponse<BookResponse> getBookById(int id) {
         Book book = bookRepository.findById(id).orElse(null);
-        return (book != null) ? mapToResponse(book) : null; // Rut gon lai code ban
+        BookResponse bookResponse = mapToResponse(book);
+        return (book != null) ? new ApiResponse<>(String.valueOf(HttpStatus.OK), bookResponse, null) : new ApiResponse<>(String.valueOf(HttpStatus.NOT_FOUND), null, null); // Rut gon lai code ban
     }
 
     @Override
@@ -41,16 +41,16 @@ public class BookServiceImpl implements BookService {
         return mapToResponse(saved);
     }
 
-    @Override
-    public BookResponse updateBook(int id, BookRequest request) {
-        if (bookRepository.existsById(id)) {
-            Book b = mapToEntity(request);
-            b.setId(id);
-            Book updated = bookRepository.save(b);
-            return mapToResponse(updated);
-        }
-        return null; // or throw an exception
-    }
+//    @Override
+//    public BookResponse updateBook(String id, BookRequest request) {
+//        if (bookRepository.existsById(id)) {
+//            Book b = mapToEntity(request);
+//            b.setId(id);
+//            Book updated = bookRepository.save(b);
+//            return mapToResponse(updated);
+//        }
+//        return null; // or throw an exception
+//    }
 
     @Override
     public void deleteBook(int id) {
@@ -58,38 +58,34 @@ public class BookServiceImpl implements BookService {
     }
 
 
-    @Override
-    public Page<BookResponse> searchBooks(String title, String author, String publisher, String language, Integer minPage, Integer maxPage, Pageable pageable) {
-        Page<Book> bookPage = bookRepository.searchBooks(title, author, publisher, language, minPage, maxPage, pageable);
-        return bookPage.map(this::mapToResponse);
-    }
+//    @Override
+//    public Page<BookResponse> searchBooks(String title, String author, String publisher, String language, Integer minPage, Integer maxPage, Pageable pageable) {
+//        Page<Book> bookPage = bookRepository.searchBooks(title, author, publisher, language, minPage, maxPage, pageable);
+//        return bookPage.map(this::mapToResponse);
+//    }
 
 
     //Mapping DTO
     private BookResponse mapToResponse(Book book) {
         BookResponse b = new BookResponse();
-        b.setCode(book.getCode());
-        b.setTitle(book.getTitle());
-        b.setAuthor(book.getAuthor());
-        b.setPublisher(book.getPublisher());
-        b.setPage_count(book.getPageCount());
-        b.setPrint_type(book.getPrintType());
-        b.setLanguage(book.getLanguage());
-        b.setDescription(book.getDescription());
-        b.setQuantity(book.getQuantity());
-        b.setCreated_at(book.getDateCreated());
+        b.setName(book.getName());
+        b.setCoverImg(book.getCoverImg());
+        b.setPrice(book.getPrice());
+        b.setPublishDate(book.getPublishDate());
+        b.setCreatedAt(book.getCreatedAt());
+        b.setLastUpdate(book.getLastUpdate());
         return b;
     }
+
     //maping entity
     private Book mapToEntity(BookRequest request) {
-        Book book = new Book();
-        book.setCode(request.getCode());
-        book.setTitle(request.getTitle());
-        book.setAuthor(request.getAuthor());
-        book.setPublisher(request.getPublisher());
-        book.setPageCount(request.getPage_count());
-        book.setPrintType(request.getPrint_type());
-        book.setLanguage(request.getLanguage());
-        return book;
+        Book b = new Book();
+        b.setName(request.getName());
+        b.setCoverImg(request.getCoverImg());
+        b.setPrice(request.getPrice());
+        b.setPublishDate(request.getPublishDate());
+        b.setCreatedAt(request.getCreatedAt());
+        b.setLastUpdate(request.getLastUpdate());
+        return b;
     }
 }

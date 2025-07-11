@@ -39,9 +39,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
         final String jwt = authHeader.substring(7);//Cắt bỏ "Bearer "
-        final String username = jwtService.extractUsername(jwt);//Lấy username từ token
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        final String id = jwtService.extractKey(jwt);//Lấy username từ token
+        if (id != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails = userDetailsService.loadUserById(id);
             if (jwtService.isTokenValid(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authenticationToken =
                         new UsernamePasswordAuthenticationToken(

@@ -1,32 +1,28 @@
 package com.miniproject.miniproject.Model;
 
 import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private int id;
+    private String id;
 
     @Column(name = "username", unique = true)
     private String username;
@@ -37,35 +33,30 @@ public class User {
     @Column(name = "full_name")
     private String fullName;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
-
     @Column(name = "email")
     private String email;
 
-    @Column(name = "img")
-    private String img;
+    @Column(name = "avatar")
+    private String avatar;
 
-    @Column(name = "age")
-    private int age;
+    @Column(name = "otp")
+    private int otp;
 
-    @Column(name = "address")
-    private String address;
+    @Column(name = "active")
+    private boolean active;
 
-    @Column(name = "created_at")
-    private String createdAt;
-
-    @OneToMany(mappedBy = "user")
-    @JsonIgnoreProperties("user")
-    private List<Borrowings> borrowings;
-
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+//Forcse sub entity follow this entity and remove relation sub entity if this entity are removed
     @JsonIgnoreProperties("user")
     private List<Comments> comments;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("user")
     private List<Post> posts;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("user")
+    private List<Reaction> reactions;
 
     @ManyToMany
     @JoinTable(
@@ -74,28 +65,24 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     @JsonIgnoreProperties("users")
-    private List<Role> roles;
+    private List<Role> roles; // Avoid duplicating role
 
-    // Default constructor
-    public User() {
-        // Default constructor
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("user")
+    private List<Favorite> favorites;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("user")
+    private Reader reader;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("user")
+    private Publisher publisher;
+
+    @PrePersist//Auto generate ID if ID doesn't exist
+    private void prePersist() {
+        if (id == null) {
+            id = UUID.randomUUID().toString(); //
+        }
     }
-
-    public User(int id, String username, String password, String fullName, String phoneNumber, String email, String img, int age, String address, String createdAt, List<Borrowings> borrowings, List<Comments> comments, List<Post> posts, List<Role> roles) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.fullName = fullName;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.img = img;
-        this.age = age;
-        this.address = address;
-        this.createdAt = createdAt;
-        this.borrowings = borrowings;
-        this.comments = comments;
-        this.posts = posts;
-        this.roles = roles;
-    }
-
 }

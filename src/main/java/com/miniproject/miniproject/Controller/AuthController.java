@@ -2,6 +2,7 @@ package com.miniproject.miniproject.Controller;
 
 import com.miniproject.miniproject.DTO.Request.UserLoginRequest;
 import com.miniproject.miniproject.DTO.Request.UserRegisterRequest;
+import com.miniproject.miniproject.DTO.Response.ApiResponse;
 import com.miniproject.miniproject.DTO.Response.AuthenticationResponse;
 import com.miniproject.miniproject.Model.User;
 import com.miniproject.miniproject.Repository.UserRepository;
@@ -32,16 +33,18 @@ public class AuthController {
     private final OtpService otpService;
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
-    private  final AuthenticationService authenticationService;
+    private final AuthenticationService authenticationService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody @Valid UserLoginRequest request) {
+    public ApiResponse<AuthenticationResponse> login(@RequestBody @Valid UserLoginRequest request) {
+        ApiResponse response = null;
         try {
             //1. Xác thực username & password bằng Spring Security
-            AuthenticationResponse response = authenticationService.login(request);
-            return ResponseEntity.ok(response);
+            response = authenticationService.login(request);
+            return response;
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid Credential");
+            response.setStatus("Invalid Credential");
+            return response;
         }
     }
 
@@ -78,8 +81,12 @@ public class AuthController {
     }
 
     @PostMapping("register")
-    public ResponseEntity<User> register(@RequestBody @Valid UserRegisterRequest request) {
-        User u = userService.register(request);
-        return ResponseEntity.ok(u);
+    public ApiResponse<User> register(@RequestBody @Valid UserRegisterRequest request) {
+        try {
+            User u = userService.register(request);
+            return new ApiResponse<>("sucess", u, null);
+        }catch (Exception e){
+            return new ApiResponse<>("Fail", null, null);
+        }
     }
 }

@@ -7,26 +7,30 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "category")
+@Table(name = "following")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Category {
+public class Following {
     @Id
-    @Column(name = "category_id")
+    @Column(name = "following_id")
     private String id;
-    @Column(name = "cayegory_name")
-    private String name;
+    //Relationship
 
-    @OneToMany
-    @JoinColumn(name = "category_id")
-    @JsonIgnoreProperties("category")
-    private List<BookCategory> bookCategories;
+    @ManyToOne
+    @JoinColumn(name = "reader_id")
+    @JsonIgnoreProperties("following")
+    private Reader reader;
+
+    @ManyToOne
+    @JoinColumn(name = "publisher_id")
+    @JsonIgnoreProperties("following")
+    private Publisher publisher;
+
     @PrePersist//Auto generate ID if ID doesn't exist
     private void prePersist(){
         if(id==null){

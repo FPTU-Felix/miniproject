@@ -5,8 +5,8 @@ import lombok.Data;
 
 @Data
 public class PostRequest {
-     @NotBlank(message = "Can leave user_id blank")
-    private int user_id;
+     @NotBlank(message = "Can leave posted_by blank")
+    private String posted_by;
      @NotBlank(message = "Can leave title blank")
     private String title;
      @NotBlank(message = "Can leave content blank")

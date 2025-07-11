@@ -2,15 +2,12 @@ package com.miniproject.miniproject.Controller;
 
 import java.util.List;
 
-import com.miniproject.miniproject.DTO.Request.BookFilterRequest;
 import com.miniproject.miniproject.DTO.Request.BookRequest;
+import com.miniproject.miniproject.DTO.Response.ApiResponse;
 import com.miniproject.miniproject.DTO.Response.BookResponse;
-import com.miniproject.miniproject.DTO.Response.GeneralListResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,18 +21,13 @@ public class BookController {
     private BookService bookService;
 
     @GetMapping
-    public GeneralListResponse<List<BookResponse>> getAllBook() {
+    public ApiResponse<List<BookResponse>> getAllBook() {
         return bookService.getAllBooks();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookResponse> getBookById(@PathVariable int id) {//@Pathvariable are used to get data from url
-        BookResponse book = bookService.getBookById(id);
-        if (book != null) {
-            return ResponseEntity.ok(book); // 200 OK
-        } else {
-            return ResponseEntity.notFound().build(); // 404 Not Found
-        }
+    public ApiResponse<BookResponse> getBookById(@PathVariable int id) {//@Pathvariable are used to get data from url
+        return bookService.getBookById(id);
     }
 
     @PostMapping
@@ -44,33 +36,33 @@ public class BookController {
         return ResponseEntity.ok(createdBook);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<BookResponse> updateBook(@PathVariable int id, @RequestBody @Valid BookRequest request) {//Valid is used to active validation for BookRequest and only work when DTO has annotation to validate
-        BookResponse updated = bookService.updateBook(id, request);
-        if (updated != null) {
-            return ResponseEntity.ok(updated);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<BookResponse> updateBook(@PathVariable int id, @RequestBody @Valid BookRequest request) {//Valid is used to active validation for BookRequest and only work when DTO has annotation to validate
+//        BookResponse updated = bookService.updateBook(id, request);
+//        if (updated != null) {
+//            return ResponseEntity.ok(updated);
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
 
-    @GetMapping("/search")
-    public ResponseEntity<Page<BookResponse>> searchBooks(//ResponseEntity is used to add status code and header go with return data
-                                                          @ModelAttribute BookFilterRequest filterRequest,
-                                                          @RequestParam(defaultValue = "0") int page,
-                                                          @RequestParam(defaultValue = "10") int size
-    ) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<BookResponse> results = bookService.searchBooks(
-                filterRequest.getTitle(),
-                filterRequest.getAuthor(),
-                filterRequest.getPublisher(),
-                filterRequest.getLanguage(),
-                filterRequest.getMinPage(),
-                filterRequest.getMaxPage(),
-                pageable
-        );
-        return ResponseEntity.ok(results);
-    }
+//    @GetMapping("/search")
+//    public ResponseEntity<Page<BookResponse>> searchBooks(//ResponseEntity is used to add status code and header go with return data
+//                                                          @ModelAttribute BookFilterRequest filterRequest,
+//                                                          @RequestParam(defaultValue = "0") int page,
+//                                                          @RequestParam(defaultValue = "10") int size
+//    ) {
+//        Pageable pageable = PageRequest.of(page, size);
+//        Page<BookResponse> results = bookService.searchBooks(
+//                filterRequest.getTitle(),
+//                filterRequest.getAuthor(),
+//                filterRequest.getPublisher(),
+//                filterRequest.getLanguage(),
+//                filterRequest.getMinPage(),
+//                filterRequest.getMaxPage(),
+//                pageable
+//        );
+//        return ResponseEntity.ok(results);
+//    }
 
 }

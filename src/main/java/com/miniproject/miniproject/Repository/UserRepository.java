@@ -7,6 +7,7 @@ import com.miniproject.miniproject.Model.User;
 public interface UserRepository extends JpaRepository<User, Integer> {
     User findByUsername(String userName);//<Prefix>By<FieldName>[And|Or]<FieldName>...
     User findByEmail(String email);
+    User findById(String id);
     // Custom query methods can be defined here if needed
     // For example, to find users by username:
     // User findByUsername(String username);

@@ -2,29 +2,31 @@ package com.miniproject.miniproject.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.boot.internal.GenerationStrategyInterpreter;
+
+import java.util.UUID;
 
 @Entity
-@Table(name = "comments")
+@Table(name = "comment")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Comments {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
-    private int id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
+
     @Column(name = "content")
     private String content;
+
     @Column(name = "created_at")
     private String createdAt;
 
@@ -39,16 +41,19 @@ public class Comments {
     @JsonIgnoreProperties("comments")
     private User user;
 
-    public Comments() {
-        // Default constructor
-    }
+    @ManyToOne
+    @JoinColumn(name = "chapter_id")
+    @JsonIgnoreProperties("comments")
+    private Chapter chapter;
 
-    public Comments(int id, String content, String createdAt, Post post, User user) {
-        this.id = id;
-        this.content = content;
-        this.createdAt = createdAt;
-        this.post = post;
-        this.user = user;
-    }
+    @OneToOne(mappedBy = "comments")
+    @JsonIgnoreProperties("comments")
+    private Reaction reaction;
 
+    @PrePersist//Auto generate ID if ID doesn't exist
+    private void prePersist(){
+        if(id==null){
+            id = UUID.randomUUID().toString();
+        }
+    }//
 }

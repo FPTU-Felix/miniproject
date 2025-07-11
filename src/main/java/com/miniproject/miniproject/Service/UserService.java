@@ -14,15 +14,14 @@ public interface UserService {
 
     User addUser(User user);
 
-    User updateUser(int id, User user);
+//    User updateUser(int id, User user);
 
     void deleteUser(int id);
 
     User register(UserRegisterRequest request);
 
-    User login(UserLoginRequest request);
-
     List<User> searchUsers(String keyword);
 
     User findByUsername(String username);
+    User findById(String id);
 }

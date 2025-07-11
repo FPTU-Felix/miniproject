@@ -1,11 +1,13 @@
 package com.miniproject.miniproject.Service.Implement;
 
 import com.miniproject.miniproject.DTO.Request.PostRequest;
+import com.miniproject.miniproject.DTO.Response.ApiResponse;
 import com.miniproject.miniproject.DTO.Response.PostResponse;
 import com.miniproject.miniproject.Model.Post;
 import com.miniproject.miniproject.Repository.PostRepository;
 import com.miniproject.miniproject.Service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,33 +19,33 @@ public class PostServiceImpl implements PostService {
     private PostRepository postRepository;
 
     @Override
-    public List<PostResponse> getAllPosts() {
-        return postRepository.findAll().stream().map(this::mapToResponse).collect(Collectors.toList());
+    public ApiResponse<List<PostResponse>> getAllPosts() {
+        return new ApiResponse<>(String.valueOf(HttpStatus.OK), postRepository.findAll().stream().map(this::mapToResponse).collect(Collectors.toList()), null);
     }
 
     @Override
-    public PostResponse getPostById(int id) {
+    public ApiResponse<PostResponse> getPostById(int id) {
         Post p = postRepository.findById(id).orElse(null);
-        return (p != null) ? mapToResponse(p) : null;
+        return (p != null) ? new ApiResponse<>(String.valueOf(HttpStatus.OK), mapToResponse(p), null) : new ApiResponse<>(String.valueOf(HttpStatus.NOT_FOUND), mapToResponse(p), null);
     }
 
     @Override
-    public PostResponse addPost(PostRequest request) {
+    public ApiResponse<PostResponse> addPost(PostRequest request) {
         Post p = mapToEntity(request);
         Post saved = postRepository.save(p);
-        return mapToResponse(saved);
+        return new ApiResponse<>("Sucess", mapToResponse(saved), null);
     }
 
-    @Override
-    public PostResponse updatePost(int id, PostRequest request) {
-        if (postRepository.existsById(id)) {
-            Post p = mapToEntity(request);
-            p.setId(id);
-            Post updated = postRepository.save(p);
-            return mapToResponse(updated);
-        }
-        return null;
-    }
+//    @Override
+//    public PostResponse updatePost(int id, PostRequest request) {
+//        if (postRepository.existsById(id)) {
+//            Post p = mapToEntity(request);
+//            p.setId(id);
+//            Post updated = postRepository.save(p);
+//            return mapToResponse(updated);
+//        }
+//        return null;
+//    }
 
     @Override
     public void deletePost(int id) {
@@ -62,7 +64,7 @@ public class PostServiceImpl implements PostService {
         p.setTitle(post.getTitle());
         p.setContent(post.getContent());
         p.setCreated_at(post.getCreatedAt());
-        p.setUser_id(post.getUser().getId());
+        p.setPosted_by(post.getUser().getId());
         return p;
     }
 
@@ -71,7 +73,7 @@ public class PostServiceImpl implements PostService {
         p.setTitle(request.getTitle());
         p.setContent(request.getContent());
         p.setCreatedAt(request.getCreated_at());
-        p.getUser().setId(request.getUser_id());
+        p.getUser().setId(request.getPosted_by());
         return p;
     }
 }

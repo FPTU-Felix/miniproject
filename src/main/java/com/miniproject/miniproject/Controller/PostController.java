@@ -1,5 +1,6 @@
 package com.miniproject.miniproject.Controller;
 
+import com.miniproject.miniproject.DTO.Response.ApiResponse;
 import com.miniproject.miniproject.DTO.Response.PostResponse;
 import com.miniproject.miniproject.Service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +18,17 @@ public class PostController {
     private PostService postService;
 
     @GetMapping
-    public List<PostResponse> getAllPosts() {
+    public ApiResponse<List<PostResponse>> getAllPosts() {
         return postService.getAllPosts();
     }
 
-    @GetMapping("/{id}")
-    public PostResponse getPostById(@PathVariable int id) { //
-        PostResponse p = postService.getPostById(id);
-        if (p != null) {
-            return p; // 200 OK
-        } else {
-            return null; // 404 Not Found
-        }
-    }
+//    @GetMapping("/{id}")
+//    public PostResponse getPostById(@PathVariable int id) { //
+//        PostResponse p = postService.getPostById(id);
+//        if (p != null) {
+//            return p; // 200 OK
+//        } else {
+//            return null; // 404 Not Found
+//        }
+//    }
 }
