@@ -10,13 +10,13 @@ public interface BookService {
 
     ApiResponse<List<BookResponse>> getAllBooks();
 
-    ApiResponse<BookResponse> getBookById(int id);
+    ApiResponse<BookResponse> getBookById(String id);
 
     BookResponse addBook(BookRequest request);
 
 //    BookResponse updateBook(int id, BookRequest request);
 
-    void deleteBook(int id);
+    void deleteBook(String id);
 
 //    Page<BookResponse> searchBooks(
 //            String title,

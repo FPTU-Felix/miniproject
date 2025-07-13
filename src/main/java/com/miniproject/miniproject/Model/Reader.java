@@ -1,5 +1,6 @@
 package com.miniproject.miniproject.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -43,7 +44,7 @@ public class Reader {
     List<Following> followings;
 
     @OneToMany(mappedBy = "reader", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("reader")
+    @JsonIgnore
     List<Rate> rates;
 
 }

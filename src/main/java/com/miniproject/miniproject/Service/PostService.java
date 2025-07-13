@@ -11,13 +11,13 @@ public interface PostService {
 
     ApiResponse<List<PostResponse>> getAllPosts();
 
-    ApiResponse<PostResponse> getPostById(int id);
+    ApiResponse<PostResponse> getPostById(String id);
 
     ApiResponse<PostResponse> addPost(PostRequest request);
 
 //    PostResponse updatePost(int id, PostRequest request);
 
-    void deletePost(int id);
+    void deletePost(String id);
 
     List<Post> searchPosts(String keyword);
 }

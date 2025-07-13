@@ -4,10 +4,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.miniproject.miniproject.Model.User;
 
-public interface UserRepository extends JpaRepository<User, Integer> {
-    User findByUsername(String userName);//<Prefix>By<FieldName>[And|Or]<FieldName>...
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<User, String> {
+    Optional<User> findByUsername(String userName);//<Prefix>By<FieldName>[And|Or]<FieldName>...
     User findByEmail(String email);
-    User findById(String id);
     // Custom query methods can be defined here if needed
     // For example, to find users by username:
     // User findByUsername(String username);

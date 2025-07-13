@@ -18,6 +18,7 @@ import java.util.UUID;
 public class BookOwership {
     @Id
     @Column(name = "bookownership_id")
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     @Column(name = "created_at")
@@ -25,18 +26,11 @@ public class BookOwership {
     //Relationship
     @ManyToOne
     @JoinColumn(name = "reader_id")
-    @JsonIgnoreProperties("book_ownership")
+    @JsonIgnoreProperties("bookOwershipList")
     private Reader reader;
 
     @OneToOne
     @JoinColumn(name = "book_id")
-    @JsonIgnoreProperties("book_ownership")
+    @JsonIgnoreProperties("bookOwershipList")
     private Book book;
-
-    @PrePersist//Auto generate ID if ID doesn't exist
-    private void prePersist(){
-        if(id==null){
-            id = UUID.randomUUID().toString();
-        }
-    }
 }

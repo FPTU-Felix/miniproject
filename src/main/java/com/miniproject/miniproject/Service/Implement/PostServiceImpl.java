@@ -24,7 +24,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public ApiResponse<PostResponse> getPostById(int id) {
+    public ApiResponse<PostResponse> getPostById(String id) {
         Post p = postRepository.findById(id).orElse(null);
         return (p != null) ? new ApiResponse<>(String.valueOf(HttpStatus.OK), mapToResponse(p), null) : new ApiResponse<>(String.valueOf(HttpStatus.NOT_FOUND), mapToResponse(p), null);
     }
@@ -48,7 +48,7 @@ public class PostServiceImpl implements PostService {
 //    }
 
     @Override
-    public void deletePost(int id) {
+    public void deletePost(String id) {
         if (postRepository.existsById(id)) {
             postRepository.deleteById(id);
         }

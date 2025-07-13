@@ -7,8 +7,11 @@ import com.miniproject.miniproject.DTO.Request.UserRegisterRequest;
 import com.miniproject.miniproject.DTO.Response.ApiResponse;
 import com.miniproject.miniproject.Model.Role;
 import com.miniproject.miniproject.Repository.RoleRepository;
+import com.miniproject.miniproject.Security.CustomerUserDetails;
 import com.miniproject.miniproject.Service.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,7 +35,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(int id) {
+    public User getUserById(String id) {
         return userRepository.findById(id).orElse(null);
     }
 
@@ -41,17 +44,8 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
-//    @Override
-//    public User updateUser(int id, User user) {
-//        if (userRepository.existsById(id)) {
-//            user.setId(id);
-//            return userRepository.save(user);
-//        }
-//        return null;
-//    }
-
     @Override
-    public void deleteUser(int id) {
+    public void deleteUser(String id) {
         userRepository.deleteById(id);
     }
 
@@ -59,6 +53,19 @@ public class UserServiceImpl implements UserService {
     public List<User> searchUsers(String keyword) {
         // Implement search logic here if needed
         return null; // Placeholder for search implementation
+    }
+
+    @Override
+    public User getCurrentUserInfo() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof CustomerUserDetails userDetails) {
+            String userId = userDetails.getUserId();
+            // Fetch full User entity from database
+            return userRepository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("User not found with ID: " + userId));
+        }
+
+        throw new RuntimeException("User not authenticated");
     }
 
     @Override
@@ -77,32 +84,13 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(u);
     }
 
-    //    @Override
-//    public User login(UserLoginRequest request) {
-//        User u = userRepository.findByUsername(request.getUsername());
-//        if (u == null) {
-//            throw new RuntimeException("User not found");
-//        }
-//        if (!passwordEncoder.matches(request.getPassword(), u.getPassword())) {
-//            throw new RuntimeException("Invalid Password");
-//        }
-//        return u;
-//    }
     @Override
     public User findByUsername(String username) {
-        User u = userRepository.findByUsername(username);
-        if (u == null) {
-            return null;
-        }
-        return u;
+        return userRepository.findByUsername(username).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
     public User findById(String id) {
-        User u = userRepository.findById(id);
-        if (u == null) {
-            return null;
-        }
-        return u;
+        return userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 }

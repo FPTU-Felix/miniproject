@@ -1,5 +1,6 @@
 package com.miniproject.miniproject.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,7 +26,7 @@ public class Rate {
 //Relationship
     @ManyToOne
     @JoinColumn( name = "reader_id")
-    @JsonIgnoreProperties("rate")
+    @JsonIgnore
     private Reader reader;
 
     @OneToOne

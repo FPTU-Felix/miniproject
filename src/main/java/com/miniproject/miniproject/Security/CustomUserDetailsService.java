@@ -24,7 +24,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     public UserDetails loadUserById(String id) throws UsernameNotFoundException {
-        User user = userService.findByUsername(id);//Dung UserService
+        User user = userService.findById(id);//Dung UserService
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }

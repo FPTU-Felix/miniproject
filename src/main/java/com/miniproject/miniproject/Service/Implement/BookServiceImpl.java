@@ -28,7 +28,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public ApiResponse<BookResponse> getBookById(int id) {
+    public ApiResponse<BookResponse> getBookById(String id) {
         Book book = bookRepository.findById(id).orElse(null);
         BookResponse bookResponse = mapToResponse(book);
         return (book != null) ? new ApiResponse<>(String.valueOf(HttpStatus.OK), bookResponse, null) : new ApiResponse<>(String.valueOf(HttpStatus.NOT_FOUND), null, null); // Rut gon lai code ban
@@ -53,7 +53,7 @@ public class BookServiceImpl implements BookService {
 //    }
 
     @Override
-    public void deleteBook(int id) {
+    public void deleteBook(String id) {
         bookRepository.deleteById(id);
     }
 

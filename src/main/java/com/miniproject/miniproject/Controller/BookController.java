@@ -26,7 +26,7 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public ApiResponse<BookResponse> getBookById(@PathVariable int id) {//@Pathvariable are used to get data from url
+    public ApiResponse<BookResponse> getBookById(@PathVariable String id) {//@Pathvariable are used to get data from url
         return bookService.getBookById(id);
     }
 

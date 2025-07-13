@@ -8,6 +8,7 @@ import com.miniproject.miniproject.Repository.UserRepository;
 import com.miniproject.miniproject.Security.CustomerUserDetails;
 import com.miniproject.miniproject.Security.JwtService;
 import com.miniproject.miniproject.Service.AuthenticationService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -35,9 +36,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new RuntimeException("Invalid username or password");
         }
 
-        User user = userRepository.findByUsername(request.getUsername());
-        if (user == null) throw new RuntimeException("User not found!");
-
+        User user = userRepository.findByUsername(request.getUsername()).orElseThrow(EntityNotFoundException::new);
         UserDetails userDetails = new CustomerUserDetails(user);
 
         try {
