@@ -11,17 +11,19 @@ public interface UserService {
 
     ApiResponse<List<User>> getAllUsers();
 
-    User getUserById(int id);
+    User getUserById(String id);
 
     User addUser(User user);
 
 //    User updateUser(int id, User user);
 
-    void deleteUser(int id);
+    void deleteUser(String id);
 
     User register(UserRegisterRequest request);
 
     List<User> searchUsers(String keyword);
+
+    User getCurrentUserInfo();
 
     User findByUsername(String username);
     User findById(String id);

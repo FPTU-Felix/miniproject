@@ -1,5 +1,6 @@
 package com.miniproject.miniproject.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.boot.internal.GenerationStrategyInterpreter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -33,7 +35,7 @@ public class Comments {
     //Relationships with User and Post can be added here if needed
     @ManyToOne
     @JoinColumn(name = "post_id")
-    @JsonIgnoreProperties("comments")
+    @JsonIgnore
     private Post post;
 
     @ManyToOne
@@ -50,9 +52,18 @@ public class Comments {
     @JsonIgnoreProperties("comments")
     private Reaction reaction;
 
+    @ManyToOne
+    @JoinColumn(name = "replied_to_id") // Foreign key column
+    @JsonIgnoreProperties("replies")
+    private Comments repliedTo;
+
+    @OneToMany(mappedBy = "repliedTo", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("repliedTo")
+    private List<Comments> replies;
+
     @PrePersist//Auto generate ID if ID doesn't exist
-    private void prePersist(){
-        if(id==null){
+    private void prePersist() {
+        if (id == null) {
             id = UUID.randomUUID().toString();
         }
     }//

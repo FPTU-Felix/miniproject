@@ -1,5 +1,6 @@
 package com.miniproject.miniproject.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,12 +23,12 @@ public class Favorite {
     //Relationship
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnoreProperties("favorite")
+    @JsonIgnore
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "book_id")
-    @JsonIgnoreProperties("favorite")
+    @JsonIgnoreProperties({"favorites", "bookOwershipList"})
     private Book book;
 
     @PrePersist//Auto generate ID if ID doesn't exist
