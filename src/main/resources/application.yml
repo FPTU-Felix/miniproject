@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: miniproject
+  profiles:
+    active: prod  # ← mặc định dùng môi trường dev, có thể đổi thành "prod" khi deploy
+
+jwt:
+  secret: NklfJVlqZlNnR0V6dG9zQ29nZUFxMW1xa0x1QnQ5K1U=
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql: TRACE
