@@ -15,7 +15,7 @@ public interface PostService {
 
     ApiResponse<PostResponse> addPost(PostRequest request);
 
-//    PostResponse updatePost(int id, PostRequest request);
+    PostResponse updatePost(String id, PostRequest request);
 
     void deletePost(String id);
 

@@ -16,7 +16,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Category {
+public class Category extends BaseEntity{
     @Id
     @Column(name = "category_id")
     private String id;

@@ -15,7 +15,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Following {
+public class Following extends BaseEntity{
     @Id
     @Column(name = "following_id")
     private String id;

@@ -6,6 +6,7 @@ import com.miniproject.miniproject.DTO.Request.BookRequest;
 import com.miniproject.miniproject.DTO.Response.ApiResponse;
 import com.miniproject.miniproject.DTO.Response.BookResponse;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import com.miniproject.miniproject.Service.BookService;
 
 @RestController
 @RequestMapping("/api/v1/library/book")
+@RequiredArgsConstructor
 public class BookController {
 
     @Autowired
@@ -36,15 +38,10 @@ public class BookController {
         return ResponseEntity.ok(createdBook);
     }
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity<BookResponse> updateBook(@PathVariable int id, @RequestBody @Valid BookRequest request) {//Valid is used to active validation for BookRequest and only work when DTO has annotation to validate
-//        BookResponse updated = bookService.updateBook(id, request);
-//        if (updated != null) {
-//            return ResponseEntity.ok(updated);
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
+    @PutMapping("/{id}")
+    public ApiResponse<BookResponse> updateBook(@PathVariable String id, @RequestBody @Valid BookRequest request) {//Valid is used to active validation for BookRequest and only work when DTO has annotation to validate
+        return bookService.updateBook(id, request);
+    }
 
 //    @GetMapping("/search")
 //    public ResponseEntity<Page<BookResponse>> searchBooks(//ResponseEntity is used to add status code and header go with return data

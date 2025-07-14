@@ -19,7 +19,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Comments {
+public class Comments extends BaseEntity{
 
     @Id
     @Column(name = "comment_id")
@@ -29,8 +29,8 @@ public class Comments {
     @Column(name = "content")
     private String content;
 
-    @Column(name = "created_at")
-    private String createdAt;
+//    @Column(name = "created_at")
+//    private String createdAt;
 
     //Relationships with User and Post can be added here if needed
     @ManyToOne

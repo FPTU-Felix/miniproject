@@ -14,7 +14,7 @@ public interface BookService {
 
     BookResponse addBook(BookRequest request);
 
-//    BookResponse updateBook(int id, BookRequest request);
+    ApiResponse<BookResponse> updateBook(String id, BookRequest request);
 
     void deleteBook(String id);
 

@@ -41,16 +41,16 @@ public class BookServiceImpl implements BookService {
         return mapToResponse(saved);
     }
 
-//    @Override
-//    public BookResponse updateBook(String id, BookRequest request) {
-//        if (bookRepository.existsById(id)) {
-//            Book b = mapToEntity(request);
-//            b.setId(id);
-//            Book updated = bookRepository.save(b);
-//            return mapToResponse(updated);
-//        }
-//        return null; // or throw an exception
-//    }
+    @Override
+    public ApiResponse<BookResponse> updateBook(String id, BookRequest request) {
+        if (bookRepository.existsById(id)) {
+            Book b = mapToEntity(request);
+            b.setId(id);
+            Book updated = bookRepository.save(b);
+            return new ApiResponse<>("Sucess", mapToResponse(updated), null);
+        }
+        return null; // or throw an exception
+    }
 
     @Override
     public void deleteBook(String id) {
@@ -73,7 +73,7 @@ public class BookServiceImpl implements BookService {
         b.setPrice(book.getPrice());
         b.setPublishDate(book.getPublishDate());
         b.setCreatedAt(book.getCreatedAt());
-        b.setLastUpdate(book.getLastUpdate());
+        b.setLastUpdate(book.getUpdatedAt());
         return b;
     }
 
@@ -85,7 +85,7 @@ public class BookServiceImpl implements BookService {
         b.setPrice(request.getPrice());
         b.setPublishDate(request.getPublishDate());
         b.setCreatedAt(request.getCreatedAt());
-        b.setLastUpdate(request.getLastUpdate());
+        b.setUpdatedAt(request.getLastUpdate());
         return b;
     }
 }

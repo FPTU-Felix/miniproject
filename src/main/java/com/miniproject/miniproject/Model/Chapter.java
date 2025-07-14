@@ -2,20 +2,26 @@ package com.miniproject.miniproject.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "chapter")
-public class Chapter {
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Chapter extends BaseEntity{
     @Id
     @Column(name = "chapter_id")
     private String id;
     @Column(name = "chapter_name")
-    private String name;
-    @Column(name = "created_at")
-    private String created_at;
+    private String chapter_name;
     @Column(name = "publish_at")
     private String publish_at;
     @Column(name = "type")

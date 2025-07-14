@@ -17,7 +17,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Post {
+public class Post extends BaseEntity{
 
     @Id
     @Column(name = "post_id")
@@ -26,8 +26,6 @@ public class Post {
     private String title;
     @Column(name = "content")
     private String content;
-    @Column(name = "created_at")
-    private String createdAt;
     //Relationship
     @ManyToOne
     @JoinColumn(name = "user_id")

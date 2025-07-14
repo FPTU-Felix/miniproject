@@ -16,7 +16,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Favorite {
+public class Favorite extends BaseEntity{
     @Id
     @Column(name = "favorite_id")
     private String id;

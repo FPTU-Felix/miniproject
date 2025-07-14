@@ -11,6 +11,7 @@ import com.miniproject.miniproject.Security.CustomerUserDetails;
 import com.miniproject.miniproject.Service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ApiResponse<List<User>> getAllUsers() {
-        return new ApiResponse<>("Sucess", userRepository.findAll(), null);
+        return new ApiResponse<>(String.valueOf(HttpStatus.OK), userRepository.findAll(), null);
     }
 
     @Override

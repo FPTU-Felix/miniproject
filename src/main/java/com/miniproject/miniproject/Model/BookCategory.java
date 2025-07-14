@@ -2,10 +2,18 @@ package com.miniproject.miniproject.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "book_category")
-public class BookCategory {
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class BookCategory extends BaseEntity{
     @Id
     @Column(name = "bookcategory_id")
     private String id;

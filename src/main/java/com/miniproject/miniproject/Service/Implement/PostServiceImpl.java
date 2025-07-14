@@ -36,16 +36,16 @@ public class PostServiceImpl implements PostService {
         return new ApiResponse<>("Sucess", mapToResponse(saved), null);
     }
 
-//    @Override
-//    public PostResponse updatePost(int id, PostRequest request) {
-//        if (postRepository.existsById(id)) {
-//            Post p = mapToEntity(request);
-//            p.setId(id);
-//            Post updated = postRepository.save(p);
-//            return mapToResponse(updated);
-//        }
-//        return null;
-//    }
+    @Override
+    public PostResponse updatePost(String id, PostRequest request) {
+        if (postRepository.existsById(id)) {
+            Post p = mapToEntity(request);
+            p.setId(id);
+            Post updated = postRepository.save(p);
+            return mapToResponse(updated);
+        }
+        return null;
+    }
 
     @Override
     public void deletePost(String id) {
@@ -63,7 +63,7 @@ public class PostServiceImpl implements PostService {
         PostResponse p = new PostResponse();
         p.setTitle(post.getTitle());
         p.setContent(post.getContent());
-        p.setCreated_at(post.getCreatedAt());
+//        p.setCreated_at(post.getCreatedAt());
         p.setPosted_by(post.getUser().getId());
         return p;
     }
@@ -72,7 +72,7 @@ public class PostServiceImpl implements PostService {
         Post p = new Post();
         p.setTitle(request.getTitle());
         p.setContent(request.getContent());
-        p.setCreatedAt(request.getCreated_at());
+//        p.setCreatedAt(request.getCreated_at());
         p.getUser().setId(request.getPosted_by());
         return p;
     }

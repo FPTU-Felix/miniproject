@@ -15,14 +15,14 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookOwership {
+public class BookOwership extends BaseEntity{
     @Id
     @Column(name = "bookownership_id")
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(name = "created_at")
-    private String createdAt;
+//    @Column(name = "created_at")
+//    private String createdAt;
     //Relationship
     @ManyToOne
     @JoinColumn(name = "reader_id")

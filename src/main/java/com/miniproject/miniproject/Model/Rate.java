@@ -16,7 +16,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Rate {
+public class Rate extends BaseEntity{
     @Id
     @Column(name = "rate_id")
     private String id;

@@ -15,7 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Reaction {
+public class Reaction extends BaseEntity{
     @Id
     @Column(name = "reaction_id")
     private String reaction_id;

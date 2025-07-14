@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "book")
-public class Book {
+public class Book extends BaseEntity{
     @Id
     @Column(name = "book_id")
     private String id;
@@ -33,11 +33,6 @@ public class Book {
     @Column(name = "publish_date")
     private String publishDate;
 
-    @Column(name = "created_at")
-    private String createdAt;
-
-    @Column(name = "last_update")
-    private String lastUpdate;
     // Relationship
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("book")

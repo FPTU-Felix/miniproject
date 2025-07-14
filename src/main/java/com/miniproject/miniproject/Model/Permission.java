@@ -9,14 +9,18 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "permissions")
 @Getter
 @Setter
-public class Permission {
+@NoArgsConstructor
+@AllArgsConstructor
+public class Permission extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,15 +33,5 @@ public class Permission {
     //Relationships can be added here if needed
     @ManyToMany(mappedBy = "permissions")
     private List<Role> roles;
-
-    public Permission() {
-    }
-
-    public Permission(int id, String name, String description, List<Role> roles) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.roles = roles;
-    }
 
 }

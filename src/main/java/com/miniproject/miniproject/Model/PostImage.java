@@ -15,7 +15,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostImage {
+public class PostImage extends BaseEntity{
     @Id
     @Column(name = "postImg_id")
     private String id;

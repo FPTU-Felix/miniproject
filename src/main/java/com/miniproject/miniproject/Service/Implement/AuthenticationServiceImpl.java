@@ -10,6 +10,7 @@ import com.miniproject.miniproject.Security.JwtService;
 import com.miniproject.miniproject.Service.AuthenticationService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -42,7 +43,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         try {
             String jwt = jwtService.gennerateToken(userDetails);
             AuthenticationResponse authenticationResponse = new AuthenticationResponse(jwt,user.getUsername(),user.getFullName(),user.getEmail(), user.getAvatar(),user.getRoles());
-            return new ApiResponse("Sucess", authenticationResponse, null);
+            return new ApiResponse(String.valueOf(HttpStatus.OK), authenticationResponse, null);
         } catch (Exception e) {
             System.out.println("❌ Token generation failed:");
             e.printStackTrace();

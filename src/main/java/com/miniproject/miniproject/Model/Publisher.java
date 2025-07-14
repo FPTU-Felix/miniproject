@@ -15,7 +15,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Publisher {
+public class Publisher extends BaseEntity{
     @Id
     @Column(name = "publisher_id")
     private String id;
