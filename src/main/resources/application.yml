@@ -2,7 +2,7 @@ spring:
   application:
     name: miniproject
   profiles:
-    active: prod  # ← mặc định dùng môi trường dev, có thể đổi thành "prod" khi deploy
+    active: local  # ← mặc định dùng môi trường dev, có thể đổi thành "prod" khi deploy
 
 jwt:
   secret: NklfJVlqZlNnR0V6dG9zQ29nZUFxMW1xa0x1QnQ5K1U=
