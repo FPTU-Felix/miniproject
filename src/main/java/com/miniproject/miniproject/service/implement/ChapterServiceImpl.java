@@ -25,6 +25,20 @@ public class ChapterServiceImpl implements ChapterService {
         return new ApiResponse<>(String.valueOf(HttpStatus.OK), chapterResponses, null);
     }
 
+    @Override
+    public List<ChapterResponse> addNewChapter() {
+        return List.of();
+    }
+
+    @Override
+    public List<ChapterResponse> updateChapter() {
+        return List.of();
+    }
+
+    @Override
+    public void deleteChapter() {
+
+    }
 
 
     private ChapterResponse mapToResponse(Chapter chapter) {
