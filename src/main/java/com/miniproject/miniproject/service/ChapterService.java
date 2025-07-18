@@ -7,4 +7,10 @@ import java.util.List;
 
 public interface ChapterService {
     ApiResponse<List<ChapterResponse>> getAllChapter();
+
+    List<ChapterResponse> addNewChapter();
+
+    List<ChapterResponse> updateChapter();
+
+    void deleteChapter();
 }

@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:mysql://bookstore.clsaao2oey1f.ap-southeast-2.rds.amazonaws.com/bookservice?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
     username: root
-    password: d07Z~$LUybrSA$kbqDfs)qoVQSzC
+    password: "*$7yHZc6D7(95Tu>$sQ0wb*U2yu-"
   jpa:
     hibernate:
       ddl-auto: validate  # production nên validate để tránh mất dữ liệu
