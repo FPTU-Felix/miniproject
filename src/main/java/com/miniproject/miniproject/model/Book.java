@@ -1,7 +1,9 @@
 package com.miniproject.miniproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,19 +44,20 @@ public class Book extends BaseEntity{
     @JsonIgnoreProperties("book")
     private List<BookOwership> bookOwershipList;
 
-    @OneToOne(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("book")
-    private Rate rate;
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Rate> rate;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("book")
+    @JsonManagedReference(value = "book-bookCategory")
     private List<BookCategory> bookCategories;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Post> posts;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "published_by")
+    @JsonBackReference
     private Publisher publisher;
 }

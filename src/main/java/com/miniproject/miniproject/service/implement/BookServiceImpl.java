@@ -2,20 +2,31 @@ package com.miniproject.miniproject.service.implement;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+import com.miniproject.miniproject.Speicification.BookSpecification;
+import com.miniproject.miniproject.dto.Request.BookFilterRequest;
 import com.miniproject.miniproject.dto.Request.BookRequest;
 import com.miniproject.miniproject.dto.Response.ApiResponse;
 import com.miniproject.miniproject.dto.Response.BookResponse;
 import com.miniproject.miniproject.model.Book;
+import com.miniproject.miniproject.model.Mapper.BookMapper;
+import com.miniproject.miniproject.model.MetaData;
 import com.miniproject.miniproject.service.BookService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.miniproject.miniproject.repository.BookRepository;
 
 @Service
+@AllArgsConstructor
 public class BookServiceImpl implements BookService {
+
+    private final BookMapper bookMapper;
     @Autowired
     private BookRepository bookRepository;
 
@@ -53,6 +64,23 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public ApiResponse<List<BookResponse>> getBooks(BookFilterRequest request) {
+        try {
+            Specification<Book> spec = BookSpecification.getBooks(request);
+            Pageable pageable = PageRequest.of(request.getPageIndex(), request.getPageSize());
+            Page<Book> bookPage = bookRepository.findAll(spec, pageable);
+            List<BookResponse> bookResponseList = bookPage.getContent().stream().map(bookMapper::toDTO).toList();
+            return new ApiResponse<>(
+                    "success",
+                    bookResponseList,
+                    new MetaData(bookPage.getNumber(), bookPage.getSize(), bookPage.getTotalPages(), bookPage.getTotalElements())
+            );
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
     public void deleteBook(String id) {
         bookRepository.deleteById(id);
     }
@@ -72,8 +100,6 @@ public class BookServiceImpl implements BookService {
         b.setCoverImg(book.getCoverImg());
         b.setPrice(book.getPrice());
         b.setPublishDate(book.getPublishDate());
-        b.setCreatedAt(book.getCreatedAt());
-        b.setLastUpdate(book.getUpdatedAt());
         return b;
     }
 

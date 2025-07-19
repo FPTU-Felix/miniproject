@@ -2,6 +2,7 @@ package com.miniproject.miniproject.service;
 
 import java.util.List;
 
+import com.miniproject.miniproject.dto.Request.BookFilterRequest;
 import com.miniproject.miniproject.dto.Request.BookRequest;
 import com.miniproject.miniproject.dto.Response.ApiResponse;
 import com.miniproject.miniproject.dto.Response.BookResponse;
@@ -15,6 +16,8 @@ public interface BookService {
     BookResponse addBook(BookRequest request);
 
     ApiResponse<BookResponse> updateBook(String id, BookRequest request);
+
+    ApiResponse<List<BookResponse>> getBooks(BookFilterRequest request);
 
     void deleteBook(String id);
 

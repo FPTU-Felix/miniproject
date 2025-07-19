@@ -1,5 +1,6 @@
 package com.miniproject.miniproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -19,24 +20,19 @@ import java.util.UUID;
 public class Rate extends BaseEntity{
     @Id
     @Column(name = "rate_id")
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     @Column(name = "score")
     private int score;
-//Relationship
+
     @ManyToOne
     @JoinColumn( name = "reader_id")
     @JsonIgnore
     private Reader reader;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "book_id")
-    @JsonIgnoreProperties("rate")
+    @JsonBackReference
     private Book book;
-    @PrePersist//Auto generate ID if ID doesn't exist
-    private void prePersist(){
-        if(id==null){
-            id = UUID.randomUUID().toString();
-        }
-    }
 }

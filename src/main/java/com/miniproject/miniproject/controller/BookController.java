@@ -2,6 +2,7 @@ package com.miniproject.miniproject.controller;
 
 import java.util.List;
 
+import com.miniproject.miniproject.dto.Request.BookFilterRequest;
 import com.miniproject.miniproject.dto.Request.BookRequest;
 import com.miniproject.miniproject.dto.Response.ApiResponse;
 import com.miniproject.miniproject.dto.Response.BookResponse;
@@ -21,10 +22,10 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-    @GetMapping
-    public ApiResponse<List<BookResponse>> getAllBook() {
-        return bookService.getAllBooks();
-    }
+//    @GetMapping
+//    public ApiResponse<List<BookResponse>> getAllBook() {
+//        return bookService.getAllBooks();
+//    }
 
     @GetMapping("/{id}")
     public ApiResponse<BookResponse> getBookById(@PathVariable String id) {//@Pathvariable are used to get data from url
@@ -42,23 +43,9 @@ public class BookController {
         return bookService.updateBook(id, request);
     }
 
-//    @GetMapping("/search")
-//    public ResponseEntity<Page<BookResponse>> searchBooks(//ResponseEntity is used to add status code and header go with return data
-//                                                          @ModelAttribute BookFilterRequest filterRequest,
-//                                                          @RequestParam(defaultValue = "0") int page,
-//                                                          @RequestParam(defaultValue = "10") int size
-//    ) {
-//        Pageable pageable = PageRequest.of(page, size);
-//        Page<BookResponse> results = bookService.searchBooks(
-//                filterRequest.getTitle(),
-//                filterRequest.getAuthor(),
-//                filterRequest.getPublisher(),
-//                filterRequest.getLanguage(),
-//                filterRequest.getMinPage(),
-//                filterRequest.getMaxPage(),
-//                pageable
-//        );
-//        return ResponseEntity.ok(results);
-//    }
+    @GetMapping
+    public ApiResponse<List<BookResponse>> getBooks(@ModelAttribute BookFilterRequest request) {
+        return bookService.getBooks(request);
+    }
 
 }
