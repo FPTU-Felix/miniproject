@@ -7,9 +7,11 @@ import com.miniproject.miniproject.model.Rate;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring", uses = {PublisherMapper.class})
 public interface BookMapper {
-    //    @Mapping(target = "categories", source = "bookCategories")
+    @Mapping(target = "categories", expression = "java(getCategories(book))")
     @Mapping(target = "rate", expression = "java(getAverageRating(book))")
     BookResponse toDTO(Book book);
 
@@ -19,6 +21,14 @@ public interface BookMapper {
                 return 0.0;
             }
             return b.getRate().stream().mapToDouble(Rate::getScore).average().orElse(0.0);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    default List<CategoryResponse> getCategories(Book b) {
+        try {
+            return b.getBookCategories().stream().map(bc -> new CategoryResponse(bc.getCategory().getId(), bc.getCategory().getName())).toList();
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }

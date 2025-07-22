@@ -1,6 +1,7 @@
 package com.miniproject.miniproject.config;
 
 import com.miniproject.miniproject.dto.Response.ApiResponse;
+import com.miniproject.miniproject.exception.GeneralException;
 import com.miniproject.miniproject.exception.ResourceNotFoundException;
 import org.springframework.expression.AccessException;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,19 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(500).body(response);
     }
     //Bat loi validate @valid
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ApiResponse<?>> handleServerError(RuntimeException ex) {
+        ApiResponse<?> response = new ApiResponse<>(ex.getMessage(), null);
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(GeneralException.class)
+    public ResponseEntity<ApiResponse<?>> handleGeneralServerError(GeneralException ex) {
+        ApiResponse<?> response = new ApiResponse<>(ex.getMessage(), null);
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiResponse<?>> handleNotFound(ResourceNotFoundException ex) {
         ApiResponse<?> response = new ApiResponse<>(ex.getMessage(), null);

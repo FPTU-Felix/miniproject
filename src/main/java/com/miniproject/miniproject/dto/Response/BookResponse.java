@@ -17,7 +17,7 @@ public class BookResponse {
     private String coverImg;
     private Double price;
     private String publishDate;
-//    private List<CategoryResponse> categories;
+    private List<CategoryResponse> categories;
     private Double rate;
     private PublisherResponse publisher;
 }
