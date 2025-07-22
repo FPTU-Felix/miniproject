@@ -3,6 +3,8 @@ spring:
     name: miniproject
   profiles:
     active: local  # ← mặc định dùng môi trường dev, có thể đổi thành "prod" khi deploy
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
 
 jwt:
   secret: NklfJVlqZlNnR0V6dG9zQ29nZUFxMW1xa0x1QnQ5K1U=

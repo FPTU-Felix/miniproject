@@ -1,5 +1,6 @@
 package com.miniproject.miniproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,12 +21,12 @@ public class BookCategory extends BaseEntity{
     //Relationship
     @ManyToOne
     @JoinColumn(name = "book_id")
-    @JsonIgnoreProperties("book_category")
+    @JsonBackReference(value = "book-bookCategory")
     private Book book;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    @JsonIgnoreProperties("book_category")
+    @JsonBackReference(value = "category-bookCategory")
     private Category category;
 
 }

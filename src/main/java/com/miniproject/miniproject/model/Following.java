@@ -1,5 +1,6 @@
 package com.miniproject.miniproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,12 +24,12 @@ public class Following extends BaseEntity{
 
     @ManyToOne
     @JoinColumn(name = "reader_id")
-    @JsonIgnoreProperties("following")
+    @JsonBackReference(value = "reader-followings")
     private Reader reader;
 
     @ManyToOne
     @JoinColumn(name = "publisher_id")
-    @JsonIgnoreProperties("following")
+    @JsonBackReference(value = "publisher-followings")
     private Publisher publisher;
 
     @PrePersist//Auto generate ID if ID doesn't exist

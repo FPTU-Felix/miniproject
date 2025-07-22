@@ -1,12 +1,16 @@
 package com.miniproject.miniproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -23,10 +27,14 @@ public class Publisher extends BaseEntity{
     @Column(name = "is_sponsored")
     private boolean isSponsored;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    @JsonIgnoreProperties("publisher")
+    @JsonBackReference(value = "user-publisher")
     private User user;
+
+    @OneToMany(mappedBy = "publisher")
+    @JsonManagedReference(value = "publisher-followings")
+    private List<Book> booksPublished;
 
     @PrePersist//Auto generate ID if ID doesn't exist
     private void prePersist(){

@@ -1,7 +1,9 @@
 package com.miniproject.miniproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "book")
-public class Book extends BaseEntity{
+public class Book extends BaseEntity {
     @Id
     @Column(name = "book_id")
     private String id;
@@ -35,26 +37,27 @@ public class Book extends BaseEntity{
 
     // Relationship
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("book")
+    @JsonManagedReference(value = "book-favorites")
     private List<Favorite> favorites;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("book")
+    @JsonManagedReference(value = "book-bookOwnerShip")
     private List<BookOwership> bookOwershipList;
 
-    @OneToOne(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("book")
-    private Rate rate;
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference(value = "book-rates")
+    private List<Rate> rate;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("book")
+    @JsonManagedReference(value = "book-bookCategory")
     private List<BookCategory> bookCategories;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
+    @JsonManagedReference(value = "book-posts")
     private List<Post> posts;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "published_by")
+    @JsonBackReference(value = "book-publishers")
     private Publisher publisher;
 }

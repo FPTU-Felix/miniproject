@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+		xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+	<changeSet id="2-add-rate-fk" author="soncq">
+		<preConditions onFail="MARK_RAN" onError="MARK_RAN">
+			<not>
+				<foreignKeyConstraintExists foreignKeyName="FK_rate_book"/>
+			</not>
+		</preConditions>
+
+		<addForeignKeyConstraint
+				baseTableName="rate"
+				baseColumnNames="book_id"
+				constraintName="FK_rate_book"
+				referencedTableName="book"
+				referencedColumnNames="book_id"
+				onDelete="CASCADE"/>
+	</changeSet>
+
+</databaseChangeLog>
