@@ -1,5 +1,6 @@
 package com.miniproject.miniproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,7 +26,7 @@ public class PostImage extends BaseEntity{
 
     @ManyToOne
     @JoinColumn(name = "post_id")
-    @JsonIgnoreProperties("postImages")
+    @JsonBackReference(value = "post-postImg")
     private Post post;
     @PrePersist//Auto generate ID if ID doesn't exist
     private void prePersist(){

@@ -1,5 +1,6 @@
 package com.miniproject.miniproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -23,12 +24,12 @@ public class Favorite extends BaseEntity{
     //Relationship
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnore
+    @JsonBackReference(value = "user-favorites")
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "book_id")
-    @JsonIgnoreProperties({"favorites", "bookOwershipList"})
+    @JsonBackReference(value = "book-favorites")
     private Book book;
 
     @PrePersist//Auto generate ID if ID doesn't exist

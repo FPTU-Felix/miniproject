@@ -1,5 +1,6 @@
 package com.miniproject.miniproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -28,10 +29,11 @@ public class Publisher extends BaseEntity{
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
+    @JsonBackReference(value = "user-publisher")
     private User user;
 
     @OneToMany(mappedBy = "publisher")
-    @JsonManagedReference
+    @JsonManagedReference(value = "publisher-followings")
     private List<Book> booksPublished;
 
     @PrePersist//Auto generate ID if ID doesn't exist

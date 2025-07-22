@@ -1,7 +1,9 @@
 package com.miniproject.miniproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,29 +31,29 @@ public class Post extends BaseEntity{
     //Relationship
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnoreProperties("post")//Ignore Post in Book.java
+    @JsonBackReference(value = "user-posts")
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "book_id")
-    @JsonIgnoreProperties("post")
+    @JsonBackReference(value = "book-posts")
     private Book book;
 
     @ManyToOne
     @JoinColumn(name = "chapter_id")
-    @JsonIgnoreProperties("posts")
+    @JsonBackReference(value = "chapter-posts")
     private Chapter chapter;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("post")
+    @JsonManagedReference(value = "post-postImg")
     private List<PostImage> postImages;
 
     @OneToOne(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("post")
+    @JsonManagedReference(value = "post-reaction")
     private Reaction reaction;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("post")
+    @JsonManagedReference(value = "post-comments")
     private List<Comments> comments;
 
     @PrePersist//Auto generate ID if ID doesn't exist

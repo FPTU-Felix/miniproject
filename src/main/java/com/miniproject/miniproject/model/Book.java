@@ -18,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "book")
-public class Book extends BaseEntity{
+public class Book extends BaseEntity {
     @Id
     @Column(name = "book_id")
     private String id;
@@ -37,15 +37,15 @@ public class Book extends BaseEntity{
 
     // Relationship
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("book")
+    @JsonManagedReference(value = "book-favorites")
     private List<Favorite> favorites;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("book")
+    @JsonManagedReference(value = "book-bookOwnerShip")
     private List<BookOwership> bookOwershipList;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonManagedReference(value = "book-rates")
     private List<Rate> rate;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -53,11 +53,11 @@ public class Book extends BaseEntity{
     private List<BookCategory> bookCategories;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
+    @JsonManagedReference(value = "book-posts")
     private List<Post> posts;
 
     @ManyToOne
     @JoinColumn(name = "published_by")
-    @JsonBackReference
+    @JsonBackReference(value = "book-publishers")
     private Publisher publisher;
 }

@@ -1,5 +1,6 @@
 package com.miniproject.miniproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,16 +20,14 @@ public class BookOwership extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-//    @Column(name = "created_at")
-//    private String createdAt;
     //Relationship
     @ManyToOne
     @JoinColumn(name = "reader_id")
-    @JsonIgnoreProperties("bookOwershipList")
+    @JsonBackReference(value = "reader-bookOwnerShip")
     private Reader reader;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "book_id")
-    @JsonIgnoreProperties("bookOwershipList")
+    @JsonBackReference(value = "book-bookOwnerShip")
     private Book book;
 }

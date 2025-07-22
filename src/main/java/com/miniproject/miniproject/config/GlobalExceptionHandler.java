@@ -15,6 +15,11 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ApiResponse<?>> handleRuntimeException(RuntimeException exception){
+        ApiResponse<?> response = new ApiResponse<>("Internal Sever Error", exception.getMessage(), null);
+        return ResponseEntity.status(500).body(response);
+    }
     //Bat loi validate @valid
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiResponse<?>> handleNotFound(ResourceNotFoundException ex) {
@@ -46,5 +51,4 @@ public class GlobalExceptionHandler {
         ApiResponse<?> response = new ApiResponse<>("Unauthentication: " + exception.getMessage(), null);
         return ResponseEntity.status(401).body(response);
     }
-
 }

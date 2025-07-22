@@ -1,6 +1,7 @@
 package com.miniproject.miniproject.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,11 +31,11 @@ public class Chapter extends BaseEntity{
     private String next_chapter;
 
     @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("chapter")
+    @JsonManagedReference(value = "chapter-comments")
     private List<Comments> comments;
 
     @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("chapter")
+    @JsonManagedReference(value = "chapter-posts")
     private List<Post> posts;
     @PrePersist//Auto generate ID if ID doesn't exist
     private void prePersist(){
