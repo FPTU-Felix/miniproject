@@ -16,11 +16,11 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<ApiResponse<?>> handleRuntimeException(RuntimeException exception){
-        ApiResponse<?> response = new ApiResponse<>("Internal Sever Error", exception.getMessage(), null);
-        return ResponseEntity.status(500).body(response);
-    }
+//    @ExceptionHandler(RuntimeException.class)
+//    public ResponseEntity<ApiResponse<?>> handleRuntimeException(RuntimeException exception){
+//        ApiResponse<?> response = new ApiResponse<>("Internal Sever Error", exception.getMessage(), null);
+//        return ResponseEntity.status(500).body(response);
+//    }
     //Bat loi validate @valid
 
     @ExceptionHandler(RuntimeException.class)
