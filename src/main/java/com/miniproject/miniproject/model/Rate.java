@@ -28,11 +28,11 @@ public class Rate extends BaseEntity{
 
     @ManyToOne
     @JoinColumn( name = "reader_id")
-    @JsonIgnore
+    @JsonBackReference(value = "reader-rates")
     private Reader reader;
 
     @ManyToOne
     @JoinColumn(name = "book_id")
-    @JsonBackReference
+    @JsonBackReference(value = "book-rates")
     private Book book;
 }

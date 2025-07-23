@@ -3,9 +3,11 @@ package com.miniproject.miniproject.model;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,8 +33,7 @@ public class Role extends BaseEntity{
 
     //Relationships can be added here if needed
     @ManyToMany(mappedBy = "roles", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("roles")
-    @JsonIgnore
+    @JsonBackReference(value = "user-userRoles")
     private List<User> users;
 
     @ManyToMany
@@ -41,7 +42,7 @@ public class Role extends BaseEntity{
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "permission_id")
     )
-    @JsonIgnoreProperties("roles")
+    @JsonManagedReference(value = "role-permissions")
     private List<Permission> permissions;
 
     @PrePersist//Auto generate ID if ID doesn't exist

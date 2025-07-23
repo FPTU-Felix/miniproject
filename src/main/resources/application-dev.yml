@@ -5,7 +5,7 @@ spring:
     password: "4l#]AjEiSe<GGV8D)f8Po2TN:)F]"
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: true
     properties:
       hibernate:

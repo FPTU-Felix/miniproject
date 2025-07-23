@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="1.2.1-add-book-id-column-to-chapter" author="felix">
+        <addColumn tableName="chapter">
+            <column name="book_id" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="1.2.2-update-existing-chapters-with-book-id" author="felix">
+        <update tableName="chapter">
+            <column name="book_id" value="1"/>
+            <where>book_id IS NULL</where>
+        </update>
+    </changeSet>
+
+    <changeSet id="1.2.3-add-not-null-constraint-to-book-id" author="felix">
+        <addNotNullConstraint tableName="chapter" columnName="book_id" columnDataType="VARCHAR(255)"/>
+    </changeSet>
+
+    <changeSet id="1.2.4-add-foreign-key-from-chapter-to-book" author="felix">
+        <addForeignKeyConstraint baseTableName="chapter"
+                                 baseColumnNames="book_id"
+                                 constraintName="fk_chapter_book"
+                                 referencedTableName="book"
+                                 referencedColumnNames="book_id"/>
+    </changeSet>
+
+</databaseChangeLog>

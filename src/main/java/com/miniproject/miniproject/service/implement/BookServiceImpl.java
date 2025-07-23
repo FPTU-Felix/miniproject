@@ -2,14 +2,16 @@ package com.miniproject.miniproject.service.implement;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 import com.miniproject.miniproject.Speicification.BookSpecification;
 import com.miniproject.miniproject.dto.Request.BookFilterRequest;
 import com.miniproject.miniproject.dto.Request.BookRequest;
 import com.miniproject.miniproject.dto.Response.ApiResponse;
 import com.miniproject.miniproject.dto.Response.BookResponse;
-import com.miniproject.miniproject.model.Book;
+import com.miniproject.miniproject.exception.ResourceNotFoundException;
+import com.miniproject.miniproject.model.*;
 import com.miniproject.miniproject.model.Mapper.BookMapper;
-import com.miniproject.miniproject.model.MetaData;
+import com.miniproject.miniproject.repository.*;
 import com.miniproject.miniproject.service.BookService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +22,20 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.miniproject.miniproject.repository.BookRepository;
-
 @Service
 @AllArgsConstructor
 public class BookServiceImpl implements BookService {
 
     private final BookMapper bookMapper;
+    private final BookRepository bookRepository;
+    private final PublisherRepository publisherRepository;
+
     @Autowired
-    private BookRepository bookRepository;
+    public BookServiceImpl(BookRepository bookRepository, BookMapper bookMapper, PublisherRepository publisherRepository) {
+        this.bookMapper = bookMapper;
+        this.bookRepository = bookRepository;
+        this.publisherRepository = publisherRepository;
+    }
 
     @Override
     public ApiResponse<List<BookResponse>> getAllBooks() {
@@ -46,8 +53,10 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookResponse addBook(BookRequest request) {
+    public BookResponse addBook(BookRequest request, String publisherId) {
+        Publisher u = publisherRepository.findById(publisherId).orElseThrow(() -> new ResourceNotFoundException("Can't find User"));
         Book b = mapToEntity(request);
+        b.setPublisher(u);
         Book saved = bookRepository.save(b);
         return mapToResponse(saved);
     }

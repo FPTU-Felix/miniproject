@@ -1,8 +1,10 @@
 package com.miniproject.miniproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,36 +30,33 @@ public class Comments extends BaseEntity{
     @Column(name = "content")
     private String content;
 
-//    @Column(name = "created_at")
-//    private String createdAt;
-
     //Relationships with User and Post can be added here if needed
     @ManyToOne
     @JoinColumn(name = "post_id")
-    @JsonIgnore
+    @JsonBackReference(value = "post-comments")
     private Post post;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnoreProperties("comments")
+    @JsonBackReference(value = "user-comments")
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "chapter_id")
-    @JsonIgnoreProperties("comments")
+    @JsonBackReference(value = "chapter-comments")
     private Chapter chapter;
 
     @OneToOne(mappedBy = "comments")
-    @JsonIgnoreProperties("comments")
+    @JsonManagedReference(value = "comment-reaction")
     private Reaction reaction;
 
     @ManyToOne
     @JoinColumn(name = "replied_to_id") // Foreign key column
-    @JsonIgnoreProperties("replies")
+    @JsonBackReference(value = "repliedTo")
     private Comments repliedTo;
 
     @OneToMany(mappedBy = "repliedTo", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("repliedTo")
+    @JsonManagedReference(value = "repliedTo")
     private List<Comments> replies;
 
     @PrePersist//Auto generate ID if ID doesn't exist

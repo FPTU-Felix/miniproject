@@ -1,5 +1,6 @@
 package com.miniproject.miniproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,17 +26,17 @@ public class Reaction extends BaseEntity{
     //Relationship
     @ManyToOne
     @JoinColumn(name = "user_id")//Foreign Key
-    @JsonIgnoreProperties("reaction")// Avoid Recusion
+    @JsonBackReference(value = "user-reactions")
     private User user;
 
     @OneToOne
     @JoinColumn(name = "post_id")
-    @JsonIgnoreProperties("reaction")
+    @JsonBackReference(value = "post-reaction")
     private Post post;
 
     @OneToOne
     @JoinColumn(name = "comment_id")
-    @JsonIgnoreProperties("reaction")
+    @JsonBackReference(value = "comment-reaction")
     private Comments comments;
 
     @PrePersist//Auto generate ID if ID doesn't exist
