@@ -1,7 +1,4 @@
 package com.miniproject.miniproject.dto.Response;
-
-import com.miniproject.miniproject.model.Book;
-import com.miniproject.miniproject.model.Rate;
 import lombok.*;
 
 import java.util.List;
