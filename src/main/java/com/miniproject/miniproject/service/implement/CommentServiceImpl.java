@@ -95,11 +95,4 @@ public class CommentServiceImpl implements CommentService {
         b.setContent(request.getContent());
         return b;
     }
-    private ReactionResponse mapToReactionResponse(Reaction reaction) {
-        ReactionResponse b = new ReactionResponse();
-        b.setType(reaction.getType());
-        b.setCreated_at(reaction.getCreatedAt());
-        b.setUpdated_at(reaction.getUpdatedAt());
-        return b;
-    }
 }

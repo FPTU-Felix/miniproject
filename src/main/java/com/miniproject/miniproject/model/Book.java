@@ -56,6 +56,10 @@ public class Book extends BaseEntity {
     @JsonManagedReference(value = "book-posts")
     private List<Post> posts;
 
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference(value = "book-chapters")
+    private List<Chapter> chapters;
+
     @ManyToOne
     @JoinColumn(name = "published_by")
     @JsonBackReference(value = "book-publishers")

@@ -13,7 +13,7 @@ public interface BookService {
 
     ApiResponse<BookResponse> getBookById(String id);
 
-    BookResponse addBook(BookRequest request);
+    BookResponse addBook(BookRequest request, String publisherId);
 
     ApiResponse<BookResponse> updateBook(String id, BookRequest request);
 

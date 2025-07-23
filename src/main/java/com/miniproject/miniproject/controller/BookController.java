@@ -9,7 +9,9 @@ import com.miniproject.miniproject.dto.Response.BookResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import com.miniproject.miniproject.service.BookService;
@@ -32,10 +34,12 @@ public class BookController {
         return bookService.getBookById(id);
     }
 
-    @PostMapping
-    public ResponseEntity<BookResponse> createBook(@RequestBody @Valid BookRequest request) {//Request body is used to automatic change Json into Object to fit with data type (here is BookRequest)
-        BookResponse createdBook = bookService.addBook(request);
-        return ResponseEntity.ok(createdBook);
+    @PostMapping("/add")
+    public ResponseEntity<ApiResponse<BookResponse>> createBook(@RequestBody @Valid BookRequest request, Authentication authentication) {//Request body is used to automatic change Json into Object to fit with data type (here is BookRequest)
+        String publisherId = authentication.getName();
+        BookResponse createdBook = bookService.addBook(request, publisherId);
+        ApiResponse<BookResponse> response = new ApiResponse<>(String.valueOf(HttpStatus.CREATED),createdBook);
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{id}")
