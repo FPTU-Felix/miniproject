@@ -19,5 +19,3 @@ spring:
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
-cors:
-  allowed-origins: http://localhost:3000

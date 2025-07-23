@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3307/bookservice?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
     username: root
-    password: "*$7yHZc6D7(95Tu>$sQ0wb*U2yu-"
+    password: "4l#]AjEiSe<GGV8D)f8Po2TN:)F]"
   jpa:
     hibernate:
       ddl-auto: update

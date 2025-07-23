@@ -58,7 +58,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getCurrentUserInfo() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         if (principal instanceof CustomerUserDetails userDetails) {
             String userId = userDetails.getUserId();
             // Fetch full User entity from database
