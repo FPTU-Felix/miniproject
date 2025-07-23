@@ -1,5 +1,6 @@
 package com.miniproject.miniproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -17,7 +18,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Chapter extends BaseEntity{
+public class Chapter extends BaseEntity {
     @Id
     @Column(name = "chapter_id")
     private String id;
@@ -27,8 +28,8 @@ public class Chapter extends BaseEntity{
     private String publish_at;
     @Column(name = "type")
     private String type;
-    @Column(name = "next_chapter")
-    private String next_chapter;
+    @Column(name = "previous_chapter")
+    private String previous_chapter;
 
     @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference(value = "chapter-comments")
@@ -37,9 +38,15 @@ public class Chapter extends BaseEntity{
     @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference(value = "chapter-posts")
     private List<Post> posts;
+
+    @ManyToOne
+    @JoinColumn(name = "book_id")
+    @JsonBackReference(value = "book-chapters")
+    private Book book;
+
     @PrePersist//Auto generate ID if ID doesn't exist
-    private void prePersist(){
-        if(id==null){
+    private void prePersist() {
+        if (id == null) {
             id = UUID.randomUUID().toString();
         }
     }

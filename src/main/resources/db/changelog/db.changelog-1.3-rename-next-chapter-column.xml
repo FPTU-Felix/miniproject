@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="1.4-rename-next-chapter-to-previous-chapter" author="felix">
+
+        <renameColumn tableName="chapter"
+                      oldColumnName="next_chapter"
+                      newColumnName="previous_chapter"
+                      columnDataType="VARCHAR(255)"/> <rollback>
+        <renameColumn tableName="chapter"
+                      oldColumnName="previous_chapter"
+                      newColumnName="next_chapter"
+                      columnDataType="VARCHAR(255)"/>
+    </rollback>
+
+    </changeSet>
+
+</databaseChangeLog>
